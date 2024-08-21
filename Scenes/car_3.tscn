@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c10ai821jvc0e"]
+
+[ext_resource type="PackedScene" uid="uid://bbh1vnjkyexdt" path="res://Assets/car3.glb" id="1_5ymwf"]
+[ext_resource type="Script" path="res://Script/car_3.gd" id="1_755lw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ot41h"]
+size = Vector3(6.6517, 5.37659, 3.62012)
+
+[node name="Car_3" type="Area3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+script = ExtResource("1_755lw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.392471, 2.18829, -0.971191)
+shape = SubResource("BoxShape3D_ot41h")
+
+[node name="car3" parent="." instance=ExtResource("1_5ymwf")]
+
+[node name="LifeTime" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="LifeTime" to="." method="_on_life_time_timeout"]

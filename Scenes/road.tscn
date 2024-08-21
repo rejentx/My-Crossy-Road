@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1fx8tinixfee"]
+
+[ext_resource type="Script" path="res://Script/road.gd" id="1_1wblq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_81gs8"]
+size = Vector3(20, 0.001, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iikfq"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jlg3m"]
+material = SubResource("StandardMaterial3D_iikfq")
+size = Vector2(20, 1)
+
+[node name="Road" type="StaticBody3D"]
+script = ExtResource("1_1wblq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_81gs8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_jlg3m")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://exo07ae8m7xr"]
+
+[ext_resource type="PackedScene" uid="uid://beujdk5tfobvi" path="res://Scenes/player.tscn" id="1_0wyhq"]
+[ext_resource type="Script" path="res://Script/level.gd" id="1_nmk0g"]
+[ext_resource type="PackedScene" uid="uid://dhcxfcxhj8yy5" path="res://Scenes/grass.tscn" id="2_sfel8"]
+[ext_resource type="Script" path="res://Script/Node.gd" id="3_314xb"]
+[ext_resource type="Script" path="res://Script/Camera3D.gd" id="3_l70wd"]
+
+[node name="Level" type="Node"]
+script = ExtResource("1_nmk0g")
+
+[node name="Player" parent="." instance=ExtResource("1_0wyhq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0424923, 0.246205, 0)
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="Player"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.0424923, -0.246205, -3.71479e-09)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.866025, -0.353553, 0.353553, 0, 0.707107, 0.707107, -0.5, -0.612372, 0.612372, 8, 16, 13)
+fov = 18.2
+near = 10.0
+far = 4043.75
+script = ExtResource("3_l70wd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+transform = Transform3D(-0.133467, 0.858277, 0.495526, -0.70078, -0.435285, 0.565185, 0.70078, -0.271822, 0.65956, -42.7257, 51.7978, -30.7144)
+shadow_enabled = true
+
+[node name="Generate" type="Node" parent="."]
+script = ExtResource("3_314xb")
+
+[node name="Grass" parent="." instance=ExtResource("2_sfel8")]
+
+[connection signal="reload" from="Player" to="." method="_on_player_reload"]
+[connection signal="screen_exited" from="Player/VisibleOnScreenNotifier3D" to="Player" method="_on_visible_on_screen_notifier_3d_screen_exited"]

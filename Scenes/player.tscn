@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://beujdk5tfobvi"]
+
+[ext_resource type="Script" path="res://Script/player.gd" id="1_sydk7"]
+[ext_resource type="PackedScene" uid="uid://4dvpic8whqdn" path="res://Scenes/chiken.tscn" id="2_vfc8a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3r6gp"]
+size = Vector3(0.256486, 0.551181, 0.395539)
+
+[sub_resource type="Animation" id="Animation_lw4cq"]
+resource_name = "Jump"
+length = 0.3
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Chiken")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.2, 1, 0, 0.321955, 0, 0.3, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ymnlm"]
+_data = {
+"Jump": SubResource("Animation_lw4cq")
+}
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(-0.3, 0, -2.62268e-08, 0, 0.3, 0, 2.62268e-08, 0, -0.3, 0, 0, 0)
+script = ExtResource("1_sydk7")
+
+[node name="Chiken" parent="." instance=ExtResource("2_vfc8a")]
+transform = Transform3D(0.1, 0, -2.66454e-15, 0, 0.1, 0, 2.66454e-15, 0, 0.1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, -7.67386e-12, 0, 1, 0, 7.67386e-12, 0, 1, -5.38097e-07, 0.0503787, 0.11726)
+shape = SubResource("BoxShape3D_3r6gp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ymnlm")
+}
+speed_scale = 2.6
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.15
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
